@@ -10,13 +10,13 @@ A minor emacs mode to work with Flask projects.
 
 ## Configuration
 
-```
+```lisp
 (load-file "path/to/flask-mode.el")
 (require 'flask-mode)
 ```
 Now you can enter `flask-mode` or if you want to start this minor mode every
 time the python mode is started, add this to your configuration
-```
+```lisp
 (add-hook 'python-mode-hook 'flask-mode)
 ```
 There are two variables, that need to be set. `flask-app` this is the name of
@@ -27,14 +27,14 @@ variable automatically upon start. Read the documentation for more. Also
 find a .git directory. See the documentation of this variable for more
 information. You could also set this variables in your configuration file with
 for example
-```
+```lisp
 (setq flask-app "awesomeApp.py"
       flask-default-directory "~/awesomeApp")
 ```
 . See `customize-group flask` for more variables.
 
 To add a custom cli command put something like this in your configuration
-```
+```lisp
 (defun my-cli-command ()
     (interactive)
     (flask-run-command "myCommand"))
