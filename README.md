@@ -12,7 +12,7 @@ to use this minor mode.
 ## Configuration
 
 ```lisp
-(load-file "path/to/flask-mode.el")
+(add-to-load-path "/path/to/flask-mode.el")
 (require 'flask-mode)
 ```
 Now you can enter `flask-mode` or if you want to start this minor mode every

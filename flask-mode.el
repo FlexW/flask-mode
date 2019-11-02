@@ -152,7 +152,7 @@ The output will be piped in a buffer named *flask-test*."
         (setq flask-run-process nil))
     (message "flask server is not running")))
 
-(defun flask-search-project-root (directory)
+(defun flask-try-setting-project-root (directory)
   "Search for the root directory of the project.
 Start in DIRECTORY and going down to /. If a file or directory named .git is
 found, `flask-default-directory' gets set."
@@ -161,7 +161,7 @@ found, `flask-default-directory' gets set."
     (progn
       (if (string= "/" directory)
           nil
-        (flask-search-project-root (flask--go-back-one-dir directory))))))
+        (flask-try-setting-project-root (flask--go-back-one-dir directory))))))
 
 (defun flask--go-back-one-dir (directory)
   "Go back one directory in DIRECTORY."
@@ -170,7 +170,7 @@ found, `flask-default-directory' gets set."
          (substring directory 0 (- (length directory) 1)))
         (t (flask--go-back-one-dir (substring directory 0 (- (length directory) 1))))))
 
-(defun flask-try-set-flask-app (directory)
+(defun flask-try-setting-flask-app (directory)
   "Try to set `flask-app' from DIRECTORY.
 For example it the DIRECTORY is /foo/bar, this function checks if there exists
 a file named bar.py in DIRECTORY. If it exists, `flask-app' will be set to this
@@ -193,19 +193,24 @@ a file named bar.py in DIRECTORY. If it exists, `flask-app' will be set to this
 (flask-key (kbd "C-c , f t") 'flask-run-tests)
 (flask-key (kbd "C-c , f k") 'flask-kill-server)
 
+(defun flask-mode-add-hooks ()
+  "Add hooks that should be run if `flask-minor-mode' is enabled."
+  (add-hook 'flask-minor-mode-hook 'flask-mode-try-setting-variables))
+
+(defun flask-mode-try-setting-variables ()
+  "Try to set automatically variables."
+  (flask-try-setting-project-root (substring default-directory
+                                             0
+                                             (- (length default-directory) 1)))
+  (flask-try-setting-flask-app flask-default-directory))
+
 (define-minor-mode flask-minor-mode
   "Flask minor mode"
   :init-value nil
   :lighter " Flask"
   :keymap flask-minor-mode-map)
 
-(defun flask-mode ()
-  "Initialize Flask mode."
-  (interactive)
-  (flask-minor-mode t)
-  (run-hooks 'flask-minor-mode-hook)
-  (flask-search-project-root (substring default-directory 0 (- (length default-directory) 1)))
-  (flask-try-set-flask-app flask-default-directory))
+(flask-mode-add-hooks)
 
 (provide 'flask-mode)
 
