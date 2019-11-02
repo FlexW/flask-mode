@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.0.4] - 2019-11-02
+### Changed
+  - Prefixed functions with `#'`
+
 ## [0.0.3] - 2019-11-02
 ### Added
   - Run flask shell from emacs
