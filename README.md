@@ -39,11 +39,11 @@ To add a custom cli command put something like this in your configuration
     (interactive)
     (flask-run-command "myCommand"))
 ```
-Now you can `M-x` and run `my-cli-command`.
+. Now you can `M-x` and run `my-cli-command`.
 
 ## Usage
 Start a flask server with `flask-run-server`. If the server is already running,
-it gets restarted. You can kill a server any time by `flask-kill-server`. Tests
+it gets restarted. You can kill the server at any time with `flask-kill-server`. Tests
 can be run with `flask-run-tests`.
 
 ### Default key bindings
