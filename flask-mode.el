@@ -35,6 +35,8 @@
 
 ;;; Code:
 
+(require 'comint)
+
 (defgroup flask nil
   "Flaskyfication for Emacs"
   :group 'programming
@@ -152,6 +154,24 @@ The output will be piped in a buffer named *flask-test*."
         (setq flask-run-process nil))
     (message "flask server is not running")))
 
+(defun flask-run-shell ()
+  "Run an inferior instance of flask shell inside Emacs."
+  (interactive)
+  (let* ((buffer (comint-check-proc "flask-shell"))
+         (process-environment process-environment)
+         (default-directory flask-default-directory))
+    (setenv "FLASK_APP" flask-app)
+    (select-window (display-buffer-in-side-window
+                    (if (or buffer (not (derived-mode-p 'flask-shell-mode))
+                            (comint-check-proc (current-buffer)))
+                        (get-buffer-create (or buffer "*flask-shell*"))
+                      (current-buffer))
+                    '((side . bottom) (slot . 0))))
+    (unless buffer
+      (apply 'make-comint-in-buffer "flask-shell" buffer
+             "flask" nil '("shell"))
+      (flask-shell-mode))))
+
 (defun flask-try-setting-project-root (directory)
   "Search for the root directory of the project.
 Start in DIRECTORY and going down to /. If a file or directory named .git is
@@ -192,6 +212,7 @@ a file named bar.py in DIRECTORY. If it exists, `flask-app' will be set to this
 (flask-key (kbd "C-c , f r") 'flask-run-server)
 (flask-key (kbd "C-c , f t") 'flask-run-tests)
 (flask-key (kbd "C-c , f k") 'flask-kill-server)
+(flask-key (kbd "C-c , f s") 'flask-run-shell)
 
 (defun flask-mode-add-hooks ()
   "Add hooks that should be run if `flask-minor-mode' is enabled."
@@ -209,6 +230,11 @@ a file named bar.py in DIRECTORY. If it exists, `flask-app' will be set to this
   :init-value nil
   :lighter " Flask"
   :keymap flask-minor-mode-map)
+
+(define-derived-mode flask-shell-mode comint-mode "Flask Shell"
+  "Major mode for `flask-run-shell'"
+  nil "Flask Shell"
+  (setq comint-prompt-read-only t))
 
 (flask-mode-add-hooks)
 

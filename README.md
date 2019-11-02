@@ -6,8 +6,9 @@ to use this minor mode.
 ## Features
 
 - Starting and killing flask server from emacs
-- Running flask tests from emacs and seeing results
-- Running flask cli commands from emacs
+- Run flask tests from emacs and seeing results
+- Run flask shell in emacs
+- Run flask cli commands from emacs
 
 ## Configuration
 
@@ -56,7 +57,7 @@ Now you can `M-x` and run `my-cli-command`.
 ## Usage
 Start a flask server with `flask-run-server`. If the server is already running,
 it gets restarted. You can kill the server at any time with `flask-kill-server`. Tests
-can be run with `flask-run-tests`.
+can be run with `flask-run-tests`. A shell can be started with `flask-run-shell`.
 
 ### Default key bindings
 | Binding      | Command name        |
@@ -64,7 +65,7 @@ can be run with `flask-run-tests`.
 | `C-c , f r`  | `flask-run-server`  |
 | `C-c , f k`  | `flask-kill-server` |
 | `C-c , f t`  | `flask-run-tests`   |
-
+| `C-c , f s`  | `flask-run-shell`   |
 
 ## Development
 This minor mode is at the moment really basic. Contributing would be welcome.
