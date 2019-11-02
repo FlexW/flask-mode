@@ -154,6 +154,7 @@ The output will be piped in a buffer named *flask-test*."
         (setq flask-run-process nil))
     (message "flask server is not running")))
 
+;;;###autoload
 (defun flask-run-shell ()
   "Run an inferior instance of flask shell inside Emacs."
   (interactive)
