@@ -6,7 +6,7 @@ to use this minor mode.
 ## Features
 
 - Starting and killing flask server from emacs
-- Run flask tests from emacs and seeing results
+- Run flask tests from emacs and see results
 - Run flask shell in emacs
 - Run flask cli commands from emacs
 
@@ -25,7 +25,7 @@ There are two variables, that need to be set. `flask-app` this is the name of
 the file which `flask run` should execute. `flask-mode` tries to set this
 variable automatically upon start. Read the documentation for more. Also
 `flask-default-directory` needs to be set to the root directory of the project.
-`flask-minor-mode` tries to automatically set this variable. Basically it tries 
+`flask-minor-mode` tries to automatically set this variable. Basically it tries
 to find a `.git` directory. See the documentation of this variable for more
 information. You could also set this variables in your configuration file with
 for example
