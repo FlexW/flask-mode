@@ -209,14 +209,14 @@ a file named bar.py in DIRECTORY. If it exists, `flask-app' will be set to this
   "Bind FUNCTION to BINDING in `flask-minor-mode-map'."
   (define-key flask-minor-mode-map binding function))
 
-(flask-key (kbd "C-c , f r") 'flask-run-server)
-(flask-key (kbd "C-c , f t") 'flask-run-tests)
-(flask-key (kbd "C-c , f k") 'flask-kill-server)
-(flask-key (kbd "C-c , f s") 'flask-run-shell)
+(flask-key (kbd "C-c , f r") #'flask-run-server)
+(flask-key (kbd "C-c , f t") #'flask-run-tests)
+(flask-key (kbd "C-c , f k") #'flask-kill-server)
+(flask-key (kbd "C-c , f s") #'flask-run-shell)
 
 (defun flask-mode-add-hooks ()
   "Add hooks that should be run if `flask-minor-mode' is enabled."
-  (add-hook 'flask-minor-mode-hook 'flask-mode-try-setting-variables))
+  (add-hook 'flask-minor-mode-hook #'flask-mode-try-setting-variables))
 
 (defun flask-mode-try-setting-variables ()
   "Try to set automatically variables."
