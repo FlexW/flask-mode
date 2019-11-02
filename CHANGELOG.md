@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.0.5] - 2019-11-02
+### Changed
+  - Autoload flask-shell-run
+
 ## [0.0.4] - 2019-11-02
 ### Changed
   - Prefixed functions with `#'`
