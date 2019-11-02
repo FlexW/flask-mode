@@ -1,6 +1,7 @@
 # flask-mode
 
-A minor emacs mode to work with Flask projects.
+A minor emacs mode to work with Flask projects. Emacs 25.1 or higher is required
+to use this minor mode.
 
 ## Features
 
