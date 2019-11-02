@@ -53,3 +53,7 @@ can be run with `flask-run-tests`.
 | `C-c , f r`  | `flask-run-server`  |
 | `C-c , f k`  | `flask-kill-server` |
 | `C-c , f t`  | `flask-run-tests`   |
+
+
+## Development
+This minor mode is at the moment really basic. Contributing would be welcome.
