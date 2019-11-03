@@ -119,7 +119,6 @@ The output of the server will be piped in a buffer named *flask-run*."
         (flask-kill-server)
         (flask-run-server))))
 
-
 (defun flask-run-command (command)
   "Run flask with the given COMMAND.
 The output will be piped in a buffer named *flask-COMMAND*."
@@ -141,7 +140,11 @@ The output will be piped in a buffer named *flask-COMMAND*."
   "Run flask test command.
 The output will be piped in a buffer named *flask-test*."
   (interactive)
-  (flask-run-command "test"))
+  (let* ((current-buffer (current-buffer)))
+    (select-window (flask-run-command "test"))
+    (end-of-buffer)
+    (flask-test-mode)
+    (pop-to-buffer current-buffer)))
 
 ;;;###autoload
 (defun flask-kill-server ()
@@ -236,6 +239,35 @@ a file named bar.py in DIRECTORY. If it exists, `flask-app' will be set to this
   "Major mode for `flask-run-shell'"
   nil "Flask Shell"
   (setq comint-prompt-read-only t))
+
+(defconst flask-test-keywords
+  '("ok" "OK"))
+
+(define-derived-mode flask-test-mode fundamental-mode "Flask Tests"
+  "Major mode for `flask-run-tests'"
+  nil "Flask Test")
+
+(add-hook 'flask-test-mode-hook
+          (lambda ()
+            (font-lock-add-keywords nil
+                                    '(("\\<\\(ok\\)" 1
+                                      '(:foreground "green") t)))))
+(add-hook 'flask-test-mode-hook
+          (lambda ()
+            (font-lock-add-keywords nil
+                                    '(("\\<\\(OK\\)" 1
+                                       '(:foreground "green" :weight bold) t)))))
+(add-hook 'flask-test-mode-hook
+          (lambda ()
+            (font-lock-add-keywords nil
+                                    '(("\\<\\(FAIL:\\)" 1
+                                       '(:foreground "red") t)))))
+(add-hook 'flask-test-mode-hook
+          (lambda ()
+            (font-lock-add-keywords nil
+                                    '(("\\<\\(FAILED\\)" 1
+                                       '(:foreground "red" :weight bold) t)))))
+
 
 (flask-mode-add-hooks)
 
